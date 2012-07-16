@@ -3,25 +3,24 @@ Simple MVC library for jQuery Mobile - Demo
 Loïc Fontaine - http://github.com/lfont - MIT Licensed
 */
 
-jQuery(function ($) {
-    var demoApp = Mvc.application({
-        main: Mvc.controller({
-            page: {
+(function (mvc) {
+    var demoApp = mvc.application();
+
+    demoApp.controller("#main", {
+        userName: "",
+        
+        pagebeforecreate: function () {
+            this.render("pagebeforecreate", {
                 title: "Main Page",
                 textInputLabel: "Type your name: ",
                 buttonLabel: "Click me",
-                footer: "just a simple demo"
-            },
-            userName: "",
-            pagebeforecreate: function (event, renderViewCallback) {
-                renderViewCallback(this.renderView("pagebeforecreate"));
-            },
-            sayHello: function (event) {
-                event.preventDefault();
-                alert("Hello, " + this.userName);
-            }
-        })
+                footer: "just a simple demo"    
+            });
+        },
+        
+        sayHello: function (req) {
+            req.event.preventDefault();
+            window.alert("Hello, " + this.userName);
+        }
     });
-
-    demoApp.start();
-});
+}(window.jqmMvc));
